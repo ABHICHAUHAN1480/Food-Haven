@@ -6,9 +6,11 @@ import Footer from '../Components/Footer'
 import { v4 as uuidv4 } from 'uuid';
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+
 const Cart = () => {
   const { getToken } = useAuth();
-  const [cartItems, setcartItems] = useState([])
+  const [cartItems, setcartItems] = useState([]);
+
   const [loading, setloading] = useState(false)
   const URL = import.meta.env.VITE_BACKEND_URL;
   const navigate=useNavigate();
@@ -106,11 +108,13 @@ setloading(true);
   
 
 
-  return (<div className='bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 '>
+  return (
+  <div className='bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 '>
      <ToastContainer
             autoClose={3000}
             theme="dark"
           />
+    
 
     <Navbar  cartLength={cartItems.length}/>
     {loading && (

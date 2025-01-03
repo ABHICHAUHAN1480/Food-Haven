@@ -41,7 +41,23 @@ router.get('/setmenu', async (req, res) => {
                     price: 23
                 },
                 {
-                    id: 424563,
+                    id: 3278,
+                    title: "Bacon King Burger",
+                    restaurantChain: "Burger King",
+                    image: "https://img.spoonacular.com/menu-items/424571-312x231.png",
+                    servings: { number: 1, size: 2, unit: "oz" },
+                    price: 14
+                },
+                {
+                    id: 4243563,
+                    title: "Bacon King Burger",
+                    restaurantChain: "Burger King",
+                    image: "https://img.spoonacular.com/menu-items/424571-312x231.png",
+                    servings: { number: 1, size: 2, unit: "oz" },
+                    price: 14
+                },
+                {
+                    id: 424363,
                     title: "Bacon King Burger",
                     restaurantChain: "Burger King",
                     image: "https://img.spoonacular.com/menu-items/424571-312x231.png",

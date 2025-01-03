@@ -74,7 +74,7 @@ const Fullmenu = ({setcartLength}) => {
         </div>
       ))}
 
-      <div className="fixed bottom-20 left-1/2 flex flex-col gap-4 transform -translate-x-1/2 z-50">
+      {/* <div className=" bottom-20 left-1/2 flex flex-col gap-4 transform -translate-x-1/2 ">
 
 
         {showCategories && (
@@ -109,7 +109,7 @@ const Fullmenu = ({setcartLength}) => {
         >
           Menu
         </button>
-      </div>
+      </div> */}
 
 
     </div>

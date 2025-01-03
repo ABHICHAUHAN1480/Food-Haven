@@ -15,18 +15,18 @@ router.get("/orderitems", async (req, res) => {
         return res.status(404).json({ error: 'No orders found for this user' });
       }
   
-      const { orders } = user;  // Destructuring orders from the user object
+      const { orders ,cart} = user;  
   
-      // Check if there are orders
       if (!orders || orders.length === 0) {
         return res.status(404).json({ error: 'No orders found for this user' });
       }
+       const length=cart.length;
        
        
-      return res.status(200).json({ data: orders });
+      return res.status(200).json({ data: orders ,length: length });
   
     } catch (error) {
-      console.error('Error getting order items:', error);  // Log the full error
+      console.error('Error getting order items:', error); 
       return res.status(500).json({ error: 'Error getting order items' });
     }
   });
