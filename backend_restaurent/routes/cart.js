@@ -13,6 +13,7 @@ router.post('/user', async (req, res) => {
     const user = await clerkClient.users.getUser(userId);
     const { cart: newCartItems } = req.body;
     
+  
     
     if (!Array.isArray(newCartItems)) {
       return res.status(400).json({ error: 'Invalid cart format. Cart must be an array.' });
@@ -81,14 +82,10 @@ router.post('/quantity', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-              
     const cartItemIndex = user.cart.findIndex((item) => item.product_id === productId);
-   
-
     if (cartItemIndex === -1) {
       return res.status(404).json({ error: 'Product not found in cart' });
     }
-  
     
     const cartItem = user.cart[cartItemIndex];
     
@@ -111,6 +108,7 @@ router.post('/quantity', async (req, res) => {
     return res.status(500).json({ error: 'Something went wrong', message: error.message });
   }
 });
+
 
 
 

@@ -6,7 +6,8 @@ import Footer from '../Components/Footer'
 import { v4 as uuidv4 } from 'uuid';
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-
+import vegicon from '../assets/vegicon.svg';
+import nonvegicon from '../assets/nonvegicon.svg';
 const Cart = () => {
   const { getToken } = useAuth();
   const [cartItems, setcartItems] = useState([]);
@@ -142,6 +143,13 @@ setloading(true);
       style={{ maxWidth: "100%" }} 
       className="cart-item flex flex-col justify-between p-4 md:p-6   bg-white border rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105"
     >
+        <div className="absolute top-4 right-4">
+                    {item.diet === 'vegetarian' ? (
+                      <img src={vegicon} alt="veg icon" className="w-7 h-7" />
+                    ) : (
+                      <img src={nonvegicon} alt="non-veg icon" className="w-7 h-7" />
+                    )}
+                  </div>
       <span className="item-name text-lg md:text-xl font-semibold text-gray-900 ">
         {item.product}
       </span>
@@ -168,7 +176,7 @@ setloading(true);
         </button>
       </div>
       <span className="item-price text-lg md:text-xl font-bold text-gray-800 mt-4">
-        ${(item.price * item.quantity).toFixed(2)}
+      ₹{(item.price * item.quantity).toFixed(2)}
       </span>
     </div>
   ))}
@@ -180,15 +188,15 @@ setloading(true);
       <ul className="divide-y divide-gray-300 mb-6">
         <li className="py-3 flex justify-between text-lg">
           <span>Subtotal</span>
-          <span>${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
+          <span>₹{cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
         </li>
         <li className="py-3 flex justify-between md:text-lg">
           <span>Tax (5%)</span>
-          <span>${(cartItems.reduce((total, item) => total + item.price * item.quantity, 0) * 0.05).toFixed(2)}</span>
+          <span>₹{(cartItems.reduce((total, item) => total + item.price * item.quantity, 0) * 0.05).toFixed(2)}</span>
         </li>
         <li className="py-3 flex justify-between text-lg font-bold">
           <span>Total</span>
-          <span>${(cartItems.reduce((total, item) => total + item.price * item.quantity, 0) * 1.05).toFixed(2)}</span>
+          <span>₹{(cartItems.reduce((total, item) => total + item.price * item.quantity, 0) * 1.05).toFixed(2)}</span>
         </li>
       </ul>
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -209,7 +217,7 @@ setloading(true);
       <div className="recommendation-item p-4 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all">
         <img src="/images/fries.jpg" alt="Ice Cream" className="w-full h-40 object-cover rounded-md mb-4" />
         <span className="item-name text-lg font-semibold text-gray-900">Ice Cream</span>
-        <span className="item-price text-lg font-bold text-gray-800 mt-2 block">$3.00</span>
+        <span className="item-price text-lg font-bold text-gray-800 mt-2 block">₹3.00</span>
         <button className="add-to-cart bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition mt-4 w-full">
           Add to Cart
         </button>
@@ -218,7 +226,7 @@ setloading(true);
       <div className="recommendation-item p-4 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all">
         <img src="/images/fries.jpg" alt="Fries" className="w-full h-40 object-cover rounded-md mb-4" />
         <span className="item-name text-lg font-semibold text-gray-900">Fries</span>
-        <span className="item-price text-lg font-bold text-gray-800 mt-2 block">$4.00</span>
+        <span className="item-price text-lg font-bold text-gray-800 mt-2 block">₹4.00</span>
         <button className="add-to-cart bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition mt-4 w-full">
           Add to Cart
         </button>

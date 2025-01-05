@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:items-center">
        
         <div className="space-y-4 text-left md:text-center">
-          <div className="text-white text-xl font-bold md:text-2xl">MY APP</div>
+          <div className="text-white text-xl font-bold md:text-2xl">Food Heaven</div>
           <p className="text-gray-400 text-sm leading-relaxed md:text-base">
             Order Your Favaurate food in 30 min's
             <span className="block mt-2">Stay healthy, stay smart.</span>
@@ -138,17 +138,16 @@ const Footer = () => {
         </div>
       </div>
   
-      {/* Decorative Glow */}
       <div className="absolute inset-0 blur-3xl opacity-20 pointer-events-none">
         <div className="absolute top-1/4 left-0 w-1/3 h-32 bg-blue-500 rounded-full animate-pulse"></div>
         <div className="absolute top-1/4 right-0 w-1/3 h-32 bg-green-500 rounded-full animate-pulse"></div>
       </div>
   
-      {/* Bottom Bar */}
+     
       <div className="mt-3 text-gray-500 text-xs sm:text-sm">
         <p>
-          &copy; 2024 All Rights Reserved. Powered by{" "}
-          <span className="text-blue-400 font-semibold">MY APP</span>.
+          &copy; 2025 All Rights Reserved. Powered by{" "}
+          <span className="text-blue-400 font-semibold">Food Heaven</span>.
         </p>
       </div>
     </div>

@@ -5,8 +5,17 @@ import { UserProfile } from '@clerk/clerk-react'
 const Navbar = ({ cartLength }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userprofile, setuserprofile] = useState(false)
+  const [settinglogo, setsettinglogo] = useState(true);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setTimeout(() => {
+      setsettinglogo(false);
+    }, 4000);
+  
+    
+  }, [])
+  
   const navigatetoHome = () => {
     navigate('/');
   }
@@ -34,7 +43,7 @@ const Navbar = ({ cartLength }) => {
         </div>
       </div >
     </div > ) :
-(<nav className="bg-gray-800 px-4 py-2 sticky top-0 z-50">
+(<nav className="bg-gradient-to-r from-orange-500 to-orange-600 px-4 py-2 sticky top-0 z-50">
 
    
   <div className="container mx-auto flex justify-between items-center">
@@ -85,11 +94,12 @@ const Navbar = ({ cartLength }) => {
             src="https://cdn.lordicon.com/ifsxxxte.json"
             trigger="loop"
             colors="primary:#e4e4e4"
-            delay="4000"
+            delay={`${settinglogo ? '0' : '4000'}`}
             state=""
             style={{ width: "45px", height: "45px" }}>
           </lord-icon>
         </li>
+        
         <li className='ml-0' >
 
           <UserButton />

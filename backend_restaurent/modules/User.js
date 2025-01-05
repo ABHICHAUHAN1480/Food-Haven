@@ -10,8 +10,9 @@ const userSchema = mongoose.Schema({
         {
             product: { type: String, required: true },
             quantity: { type: Number, required: true },
-            product_id: { type: Number, required: true },
+            product_id: { type: String, required: true },
             price: { type: Number, required: true },
+            diet:{type:String ,required :true},
         }
     ],
     orders: [{
@@ -22,6 +23,7 @@ const userSchema = mongoose.Schema({
             quantity: { type: Number, required: true },
             product_id: { type: Number, required: true },
             price: { type: Number, required: true },
+            diet:{type:String ,required :true},
         }],
         order_at: { type: Date, default: Date.now },
         status:{type:String,required:true}

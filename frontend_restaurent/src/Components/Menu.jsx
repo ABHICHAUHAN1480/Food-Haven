@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import notfound from '../assets/notfound.jpg';
 import { useAuth } from '@clerk/clerk-react';
 import debounce from 'lodash.debounce';
-
-const Menu = ({ query, number,toast ,cartItems,setcartLength }) => {
+import vegicon from '../assets/vegicon.svg';
+import nonvegicon from '../assets/nonvegicon.svg';
+const Menu = ({ categoryName,items,toast ,cartItems,setcartLength }) => {
   const [menuitems, setmenuitems] = useState([]);
   const [cartState, setCartState] = useState({});
   const { getToken } = useAuth();
@@ -11,20 +12,21 @@ const Menu = ({ query, number,toast ,cartItems,setcartLength }) => {
   const URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-    fetchMenu();
+    // fetchMenu();
+    setmenuitems(items);
   }, []);
   useEffect(() => { 
     checksameIds(menuitems, cartItems);
-  }, [cartItems]);
+  }, [cartItems,menuitems]);
 
   // useEffect(() => {
   //   setcartLength((prevLength) => prevLength + cartState.length);
   // }, [cartState])
   
 
-  const fetchExternalData = async (title, id, quantity, price) => {
+  const fetchExternalData = async (title, id, quantity, price,diet) => {
     const body = {
-      cart: [{ product_id: id, product: title, quantity: quantity, price: price }]
+      cart: [{ product_id: id, product: title, quantity: quantity, price: price ,diet:diet }]
     };
 
     setloading(true); 
@@ -103,25 +105,12 @@ const Menu = ({ query, number,toast ,cartItems,setcartLength }) => {
       }
     }
   };
-  const fetchMenu = async () => {
-    setloading(true); 
-    try {
-      const response = await fetch(`${URL}/menu/setmenu?query=${query}&number=${number}`);
-      const data = await response.json();
-
-      if (data.success) {
-        setmenuitems(data.data);
-      }
-    } catch (error) {
-      console.error('Error fetching menu items:', error);
-      alert('Failed to fetch menu');
-    } finally {
-      setloading(false); 
-    }
-  }
+ 
 
   const updateCart = async (productId, operation) => {
     const body = { productId, operation };
+    
+    
     setloading(true); 
     try {
       const token = await getToken();
@@ -145,12 +134,11 @@ const Menu = ({ query, number,toast ,cartItems,setcartLength }) => {
     }
   };
 
-  return (<>
-  
-    <div className='sm:flex sm:flex-wrap justify-center'>
-    
+  return (
+    <>
+    <div className="flex flex-col items-center justify-center bg-gray-50 min-h-screen px-4 sm:px-8">
       {loading && (
-        <div className="fixed inset-0 z-50  flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="flex flex-col items-center gap-4">
             <lord-icon
               src="https://cdn.lordicon.com/dupxuoaa.json"
@@ -163,62 +151,86 @@ const Menu = ({ query, number,toast ,cartItems,setcartLength }) => {
           </div>
         </div>
       )}
-      {menuitems.length === 0 && <p>No menu items found.</p>}
-      {menuitems.map((item) => (
-        <div key={item.id} className="menu-item card shadow-lg hover:shadow-xl transition-all ease-in-out duration-300 m-4 p-4 flex flex-col items-center justify-between rounded-lg border border-gray-200 w-full  md:w-5/12 lg:w-3/12">
-          <img
-            src={item.image || notfound}
-            alt="food img"
-            className="menu-item-image rounded-lg w-[150px] h-[100px] object-cover mb-4"
-            onError={(e) => { e.target.src = notfound; }}
-          />
-          <div className="menu-item-content text-center">
-            <h2 className="text-xl text-orange-800 font-semibold mb-2">{item.title}</h2>
+      <h1 id={`${categoryName}`}  className="text-5xl font-extrabold text-center text-gray-800 border-b-4 border-gray-700  my-10">
+        {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
+      </h1>
+      {menuitems.length === 0 && <p className="text-lg text-gray-600">No menu items found.</p>}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full max-w-6xl mx-auto">
+        {menuitems.map((item) => (
+          <div
+            key={item.id}
+            id={`${item.title}`}
+            className="relative bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-xl p-6 flex flex-col items-center text-center border border-gray-200"
+          >
+            <img
+              src={item.image_url || notfound}
+              alt="food img"
+              className="w-40 h-28 rounded-lg object-cover mb-4 shadow-sm"
+              onError={(e) => {
+                e.target.src = notfound;
+              }}
+            />
+            <div className="absolute top-4 left-4">
+              {item.diet === 'vegetarian' ? (
+                <img src={vegicon} alt="veg icon" className="w-7 h-7" />
+              ) : (
+                <img src={nonvegicon} alt="non-veg icon" className="w-7 h-7" />
+              )}
+            </div>
+            <h2   className="text-lg font-bold text-gray-900 mb-1">{item.title}</h2>
             <p className="text-sm text-gray-600 mb-3">
               Serving: {item.servings.number} {item.servings.size} {item.servings.unit}
             </p>
-            <span className='flex items-center align-middle gap-7 '>
-              <span className="text-lg font-bold text-green-600 ">
-                ${item.price}
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <span className="text-yellow-500 text-lg flex items-center">
+                {'★'.repeat(Math.floor(item.rating))}
+                {'☆'.repeat(5 - Math.floor(item.rating))}
               </span>
+              <span className="text-sm text-gray-500">({item.rating.toFixed(1)})</span>
+            </div>
+            <div className="flex justify-between items-center w-full mt-auto">
+              <span className="text-xl font-bold text-green-600">₹{item.price}</span>
               {!cartState[item.id] ? (
                 <button
-                  className="add-to-cart-btn bg-orange-500 text-white py-2  px-4 rounded-full  hover:bg-orange-600 transition-all duration-300"
+                  className="bg-orange-500 text-white py-2 px-5 rounded-full hover:bg-orange-600 transition-all duration-300"
                   onClick={() => {
-                    setCartState(prevState => ({
+                    setCartState((prevState) => ({
                       ...prevState,
-                      [item.id]: { quantity: 1 }
+                      [item.id]: { quantity: 1 },
                     }));
                     setcartLength((prevLength) => prevLength + 1);
-                    fetchExternalData(item.title, item.id, 1 ,item.price);
+                    fetchExternalData(item.title, item.id, 1, item.price,item.diet);
                   }}
                 >
                   Add to Cart
                 </button>
               ) : (
-                <div className="quantity-control flex items-center w-36">
+                <div className="flex items-center gap-1">
                   <button
-                    className="decrement-btn bg-gray-300 text-gray-700 py-2  px-4 rounded-l-full hover:bg-gray-400 transition-all duration-300"
+                    className="bg-gray-300 text-gray-700 py-2 px-3 rounded-l-full hover:bg-gray-400 transition-all duration-300"
                     onClick={() => handleQuantityChange(item.id, 'decrement')}
                   >
-                    -
+                    −
                   </button>
-                  <span className="quantity-number mx-2 text-lg font-semibold">{cartState[item.id]?.quantity}</span>
+                  <span className="text-lg font-semibold text-gray-900">
+                    {cartState[item.id]?.quantity}
+                  </span>
                   <button
-                    className="increment-btn bg-gray-300 text-gray-700 py-2 px-4 rounded-r-full hover:bg-gray-400 transition-all duration-300"
+                    className="bg-gray-300 text-gray-700 py-2 px-3 rounded-r-full hover:bg-gray-400 transition-all duration-300"
                     onClick={() => handleQuantityChange(item.id, 'increment')}
                   >
                     +
                   </button>
                 </div>
               )}
-
-            </span>
-
+            </div>
           </div>
-        </div>
-      ))}
-    </div></>
+        ))}
+      </div>
+    </div>
+  </>
+  
+  
   );
 };
 

@@ -74,20 +74,21 @@ const Order = () => {
               >
                 <p>Product: {item.product}</p>
                 <p>Quantity: {item.quantity}</p>
-                <p>Price: ${item.price}</p>
+                <p>Price: ₹{item.price}</p>
               </div>
             ))}
           </div>
           <div className="mt-4 text-gray-300">
-            <p className="font-medium">Total Price: ${order.cart_value}</p>
+            <p className="font-medium">Total Price: ₹{order.cart_value}</p>
             <p>Total Quantity: {order.cart.reduce((total, item) => total + item.quantity, 0)}</p>
-            <p>Subtotal (with tax): ${(order.cart_value * 1.05).toFixed(2)}</p>
+            <p>Subtotal (with tax): ₹{(order.cart_value * 1.05).toFixed(2)}</p>
           </div>
         </div>
       ))
     )}
   
     <h2 className="text-4xl font-bold mt-10 mb-6">Delivered Orders</h2>
+    
     
     {orders.filter(order => order.status === 'Delivered').length === 0 ? (
       <p className="text-lg text-gray-400">No delivered orders at the moment.</p>
@@ -115,14 +116,14 @@ const Order = () => {
               >
                 <p>Product: {item.product}</p>
                 <p>Quantity: {item.quantity}</p>
-                <p>Price: ${item.price}</p>
+                <p>Price: ₹{item.price}</p>
               </div>
             ))}
           </div>
           <div className="mt-4 text-gray-300">
-            <p className="font-medium">Total Price: ${order.cart_value}</p>
+            <p className="font-medium">Total Price: ₹{order.cart_value}</p>
             <p>Total Quantity: {order.cart.reduce((total, item) => total + item.quantity, 0)}</p>
-            <p>Subtotal (with tax): ${(order.cart_value * 1.05).toFixed(2)}</p>
+            <p>Subtotal (with tax): ₹{(order.cart_value * 1.05).toFixed(2)}</p>
           </div>
         </div>
       ))

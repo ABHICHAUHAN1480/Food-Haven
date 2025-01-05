@@ -8,7 +8,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #F7F7F7  ;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,4 +30,45 @@ height: 56px;
 }
 html {
   scroll-padding-top: 80px; 
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideup {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceslow {
+  0%, 100% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+}
+
+.fadein {
+  animation: fadein 1s ease-in-out;
+}
+
+.slideup {
+  animation: slideup 1s ease-in-out;
+}
+
+.bounceslow {
+  animation: bounceslow 2s ease-in-out infinite;
 }
