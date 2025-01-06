@@ -53,7 +53,7 @@ router.post('/user', async (req, res) => {
     }
     
     
-    return res.status(200).json({ success: true, user: user1 });
+    return res.status(200).json({ success: true });
 
   } catch (error) {
     

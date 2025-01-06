@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { SignInButton, SignOutButton, SignedIn, SignedOut, useUser, useAuth, UserProfile } from '@clerk/clerk-react';
+import { useAuth } from '@clerk/clerk-react';
 import Navbar from '../Components/Navbar';
 import Fullmenu from '../Components/Fullmenu';
 import Footer from '../Components/Footer';
@@ -83,13 +83,13 @@ const Home = () => {
       const { success, data } = await response.json();
 
       if (success) {
-        setcartLength(data || 0); // Default to 0 if data is undefined
+        setcartLength(data || 0);
       } else {
         console.error('Error fetching cart length:', data);
       }
     } catch (error) {
       console.error('Error fetching cart length:', error.message);
-      alert('Failed to fetch cart length. Please try again.');
+      
     }
   };
 
@@ -177,7 +177,7 @@ const Home = () => {
                 )
               }
 
-              <div className="bg-white w-full max-w-md p-3 flex gap-2 items-center rounded-lg shadow-md transition-transform transform hover:scale-105 relative">
+              <div onClick={gotomenu} className="bg-white w-full max-w-md p-3 flex gap-2 items-center rounded-lg shadow-md transition-transform transform hover:scale-105 relative">
 
                 <lord-icon
                   src="https://cdn.lordicon.com/fkdzyfle.json"

@@ -136,7 +136,7 @@ const Fullmenu = () => {
   
     
     <div className="flex justify-center my-8">
-  {/* Search Box */}
+ 
   <div className="bg-white w-full max-w-2xl p-4 flex items-center gap-4 rounded-2xl shadow-lg transition-transform transform hover:scale-105 relative">
     <lord-icon
       src="https://cdn.lordicon.com/fkdzyfle.json"
@@ -170,7 +170,6 @@ const Fullmenu = () => {
   </div>
 </div>
 
-{/* Search Results */}
 <div className="mt-6 w-full max-w-2xl  mx-auto ">
   {search ? (
     searcharray.length > 0 ? (
@@ -179,12 +178,11 @@ const Fullmenu = () => {
           <div
             key={id}
             onClick={() => {
-              setsearch("")
+              setsearch("");
               const targetElement = document.getElementById(`${item.title}`);
               if (targetElement) {
-                const offset = 300; // Adjust this value as per your layout
-                const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                const offsetPosition = elementPosition - offset;
+                const elementPosition = targetElement.getBoundingClientRect().top ;
+                const offsetPosition = elementPosition - (window.innerHeight ) + (targetElement.offsetHeight / 2); 
             
                 window.scrollTo({
                   top: offsetPosition,
@@ -192,6 +190,7 @@ const Fullmenu = () => {
                 });
               }
             }}
+            
             className="bg-white cursor-pointer text-gray-800 flex gap-4 p-4 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-lg border border-gray-200"
           >
             <img className='w-[60px] h-[60px]' src={item.image_url} alt="image" />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import notfound from '../assets/notfound.jpg';
-import { useAuth } from '@clerk/clerk-react';
+import { RedirectToSignUp, SignedOut, SignIn, useAuth } from '@clerk/clerk-react';
 import debounce from 'lodash.debounce';
 import vegicon from '../assets/vegicon.svg';
 import nonvegicon from '../assets/nonvegicon.svg';
@@ -8,6 +8,7 @@ const Menu = ({ categoryName,items,toast ,cartItems,setcartLength }) => {
   const [menuitems, setmenuitems] = useState([]);
   const [cartState, setCartState] = useState({});
   const { getToken } = useAuth();
+  const [gotosignup, setgotosignup] = useState(false);
   const [loading, setloading] = useState(false)
   const URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -32,6 +33,11 @@ const Menu = ({ categoryName,items,toast ,cartItems,setcartLength }) => {
     setloading(true); 
     try {
       const token = await getToken();
+      
+      if(!token){
+        toast.error('Please login to add items to cart');
+          setgotosignup(true);
+      }
 
       const response = await fetch(`${URL}/home/user`, {
         method: 'POST',
@@ -56,7 +62,7 @@ const Menu = ({ categoryName,items,toast ,cartItems,setcartLength }) => {
 
     } catch (error) {
       console.error('Error adding item to cart:', error);
-      alert('Failed to add item to cart');
+      
     } finally {
       setloading(false); 
     }
@@ -151,6 +157,17 @@ const Menu = ({ categoryName,items,toast ,cartItems,setcartLength }) => {
           </div>
         </div>
       )}
+  {gotosignup && (
+ 
+   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+   <div className="flex flex-col items-center gap-4">
+   <SignedOut>
+      <SignIn />
+    </SignedOut>
+   </div>
+ </div>
+)}
+
       <h1 id={`${categoryName}`}  className="text-5xl font-extrabold text-center text-gray-800 border-b-4 border-gray-700  my-10">
         {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
       </h1>
