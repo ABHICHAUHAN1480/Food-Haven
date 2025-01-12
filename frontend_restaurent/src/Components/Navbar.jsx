@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from '@clerk/clerk-react';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserProfile } from '@clerk/clerk-react'
@@ -6,15 +6,17 @@ const Navbar = ({ cartLength }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userprofile, setuserprofile] = useState(false)
   const [settinglogo, setsettinglogo] = useState(true);
+  const [showsetting, setshowsetting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    timeout();
+  }, [])
+  const timeout=()=>{
     setTimeout(() => {
       setsettinglogo(false);
     }, 4000);
-  
-    
-  }, [])
+  }
   
   const navigatetoHome = () => {
     navigate('/');
@@ -26,16 +28,19 @@ const Navbar = ({ cartLength }) => {
   const gotoorder = () => {
     navigate('/order');
   }
+  const gotomenu = () => {
+    navigate('/menu');
+  }
   return (
 <>
     { userprofile ?
        ( 
-        <div className = "modal overflow-y-auto top-2 z-20 absolute   w-full h-full left-0 flex items-center  justify-center bg-gray-900 bg-opacity-50">
-      < div className = "modal-content" >
+        <div className = "modal overflow-y-auto top-2 z-20 fixed   w-full h-full left-0 flex items-center  justify-center bg-gray-900 bg-opacity-50">
+      < div className = "modal-content " >
         <UserProfile />
         <div className="flex justify-center ">
           <button
-            onClick={() => setuserprofile(false)}
+        onClick={() => { setuserprofile(false); timeout();setsettinglogo(true); }}
             className="bg-red-500 text-white py-2 px-4 rounded my-4 hover:bg-red-700"
           >
             Close Profile
@@ -54,7 +59,7 @@ const Navbar = ({ cartLength }) => {
 
     <ul className=" hidden md:flex space-x-6 items-center ">
       <li className="text-white text-2xl font-bold hover:underline hover:text-gray-300 cursor-pointer" onClick={navigatetoHome}>Home</li>
-      <li className="text-white text-2xl font-bold hover:underline hover:text-gray-300 cursor-pointer">Services</li>
+      < li onClick={gotomenu} className="text-white text-2xl font-bold hover:underline hover:text-gray-300 cursor-pointer">Menu</li>
       <li className='cursor-pointer' onClick={navigatetoCart}><div style={{ position: 'relative', display: 'inline-block', width: '45px', height: '45px' }}>
         <lord-icon
           src="https://cdn.lordicon.com/pbrgppbb.json"
@@ -89,7 +94,7 @@ const Navbar = ({ cartLength }) => {
 
         </li></SignedOut>
       <SignedIn>
-        <li onClick={gotoorder}   className='cursor-pointer'>
+        <li onClick={() => setshowsetting((prev) => !prev)}   className='cursor-pointer'>
           <lord-icon
             src="https://cdn.lordicon.com/ifsxxxte.json"
             trigger="loop"
@@ -131,9 +136,9 @@ const Navbar = ({ cartLength }) => {
   </div>
 
   {isOpen && (
-    <ul className="md:hidden bg-gray-800 p-4 space-y-4">
+    <ul className="md:hidden bg-gray-800 p-4 space-y-4 rounded-md">
       <li onClick={navigatetoHome} className="text-white hover:underline hover:text-gray-300 cursor-pointer">Home</li>
-      <li className="text-white hover:text-gray-300 hover:underline cursor-pointer">Services</li>
+      <li onClick={gotomenu} className="text-white hover:text-gray-300 hover:underline cursor-pointer">Menu</li>
 
       <SignedOut>
         <li>
@@ -145,13 +150,11 @@ const Navbar = ({ cartLength }) => {
           </SignInButton>
 
         </li></SignedOut>
-      <li onClick={navigatetoCart} className="text-white hover:text-gray-300 hover:underline cursor-pointer">CART ({cartLength})</li>
-
+      <li onClick={navigatetoCart} className="text-white hover:text-gray-300 hover:underline cursor-pointer">CART <SignedIn>({cartLength})</SignedIn></li>
+           
       <SignedIn>
-
-        <li onClick={() => { setuserprofile(true); setIsOpen(false) }} className="text-white hover:text-gray-300 hover:underline cursor-pointer">
-          Your Profile
-        </li>
+        <li onClick={() => setshowsetting((prev) => !prev)}>Setting</li>
+       
       </SignedIn>
     </ul>
 
@@ -160,7 +163,56 @@ const Navbar = ({ cartLength }) => {
 
 </nav>)
     
-    }
+    } 
+   {showsetting && (
+  <div className="top-0 fixed md:absolute w-full h-full md:h-auto  md:top-20 md:right-4 z-50 bg-white md:w-[400px] max-h-[700px] text-gray-800 rounded-lg shadow-lg border border-gray-300">
+    <span className='md:hidden block absolute top-0 right-0  cursor-pointer' onClick={() => setshowsetting(false)}>
+    <lord-icon
+    src="https://cdn.lordicon.com/xracfmrw.json"
+    trigger="click"
+    stroke="bold"
+    colors="primary:#848484,secondary:#000000,tertiary:#848484"
+    style= {{width: "45px", height: "45px"}}>
+</lord-icon>
+    </span>
+     <div onClick={()=>{ setuserprofile(true); setIsOpen(false);setshowsetting(false)} }  className="flex mt-[55px] md:mt-4 items-center gap-5 m-4 p-2 font-bold text-lg cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out rounded-md bg-gray-100 hover:bg-gray-200 border border-gray-400">
+    <lord-icon
+    src="https://cdn.lordicon.com/oeyhfinq.json"
+    trigger="loop"
+    stroke="bold"
+    delay="1000"
+    colors="primary:#121331,secondary:#242424,tertiary:#545454,quaternary:#b4b4b4"
+    style={{ width: "45px", height: "45px" }}>
+</lord-icon>
+      <span>My Profile</span>
+    </div>
+    <div onClick={gotoorder} className="flex items-center gap-5 m-4 p-2 font-bold text-lg cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out rounded-md bg-gray-100 hover:bg-gray-200 border border-gray-400">
+      <lord-icon
+        src="https://cdn.lordicon.com/rqzuamwu.json"
+        trigger="loop"
+        stroke="bold"
+        delay="1000"
+        colors="primary:#121331,secondary:#848484"
+        style={{ width: "45px", height: "45px" }}
+      ></lord-icon>
+      <span  >My Orders</span>
+    </div>
+    <SignOutButton>
+    <div  className="flex items-center gap-5 m-4 p-2 font-bold text-lg cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out rounded-md bg-gray-100 hover:bg-gray-200 border border-gray-400">
+    <lord-icon
+    src="https://cdn.lordicon.com/kzwsxyaq.json"
+    trigger="hover"
+    stroke="bold"
+    colors="primary:#000000,secondary:#242424,tertiary:#545454"
+    style={{ width: "45px", height: "45px" }}>
+</lord-icon>
+      <span>Signed Out</span>
+    </div>
+    </SignOutButton>
+    
+  </div>
+)}
+
     </>   
   );
 };

@@ -28,6 +28,36 @@ const Fullmenu = () => {
       setshowsearch(false);
     }, 3500);
   }, []);
+  const applyGlowEffect = (id) => {
+    const targetElement = document.getElementById(id);
+    if (targetElement) {
+      
+      targetElement.style.transition = "all 0.5s ease-in-out"; 
+      
+     
+      targetElement.style.boxShadow = "0 0 15px 5px rgba(255, 165, 0, 1), 0 0 25px 10px rgba(255, 140, 0, 0.9)";
+      targetElement.style.textShadow = "0 0 8px rgba(255, 165, 0, 1), 0 0 20px rgba(255, 140, 0, 0.9)";
+  
+      let pulseInterval = setInterval(() => {
+       
+        const glowIntensity = Math.random() * (1.5 - 1) + 0.7; 
+        targetElement.style.boxShadow = `0 0 15px ${glowIntensity * 10}px rgba(255, 165, 0, 1), 0 0 30px ${glowIntensity * 20}px rgba(255, 140, 0, 0.9)`;
+        targetElement.style.textShadow = `0 0 8px rgba(255, 165, 0, 1), 0 0 20px rgba(255, 140, 0, 0.9)`;
+      }, 1000); 
+  
+      
+      setTimeout(() => {
+        clearInterval(pulseInterval);
+        targetElement.style.boxShadow = "";
+        targetElement.style.textShadow = "";
+      }, 5500); 
+    } else {
+      console.log("Element not found!");
+    }
+  };
+  
+  
+
 
   useEffect(() => {
     setcartLength(cartItems.length);
@@ -170,7 +200,7 @@ const Fullmenu = () => {
   </div>
 </div>
 
-<div className="mt-6 w-full max-w-2xl  mx-auto ">
+<div className="mt-6 w-full max-w-2xl   mx-auto ">
   {search ? (
     searcharray.length > 0 ? (
       <div className=" px-4 flex flex-col gap-2 max-h-[50vh] overflow-y-auto hide-scrollbar">
@@ -178,16 +208,19 @@ const Fullmenu = () => {
           <div
             key={id}
             onClick={() => {
-              setsearch("");
+              setTimeout(() => {
+                setsearch("");  
+              }, 2000);
+              applyGlowEffect(item.title);
               const targetElement = document.getElementById(`${item.title}`);
               if (targetElement) {
-                const elementPosition = targetElement.getBoundingClientRect().top ;
-                const offsetPosition = elementPosition - (window.innerHeight ) + (targetElement.offsetHeight / 2); 
-            
+                const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY-200;
                 window.scrollTo({
-                  top: offsetPosition,
+                  top: elementPosition,
                   behavior: "smooth",
                 });
+              } else {
+                console.log("Element not found!");
               }
             }}
             
