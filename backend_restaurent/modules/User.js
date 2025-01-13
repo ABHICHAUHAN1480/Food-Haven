@@ -26,8 +26,17 @@ const userSchema = mongoose.Schema({
             diet:{type:String ,required :true},
         }],
         order_at: { type: Date, default: Date.now },
-        status:{type:String,required:true}
-    }]
+        delivery_eta: { type: Date },
+        status:{type:String,required:true},
+        addressname: { type: String }
+    }],
+    userAdress:[ {
+        addressname: { type: String },
+        street: { type: String },
+        city: { type: String },
+        state: { type: String },
+        zip: { type: String },
+    }],
 });
 
 

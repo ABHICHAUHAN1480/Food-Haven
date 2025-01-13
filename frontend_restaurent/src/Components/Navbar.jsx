@@ -1,13 +1,36 @@
 import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from '@clerk/clerk-react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserProfile } from '@clerk/clerk-react'
+import logo from '../assets/logi.png';
 const Navbar = ({ cartLength }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userprofile, setuserprofile] = useState(false)
   const [settinglogo, setsettinglogo] = useState(true);
   const [showsetting, setshowsetting] = useState(false);
   const navigate = useNavigate();
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setshowsetting(false);
+      }
+    };
+   
+    document.addEventListener('click', handleClickOutside);
+  
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+  
+  const toggleSettings = (event) => {
+    event.stopPropagation(); 
+    setshowsetting((prev) => !prev);
+  };
+  
 
   useEffect(() => {
     timeout();
@@ -35,8 +58,8 @@ const Navbar = ({ cartLength }) => {
 <>
     { userprofile ?
        ( 
-        <div className = "modal overflow-y-auto top-2 z-20 fixed   w-full h-full left-0 flex items-center  justify-center bg-gray-900 bg-opacity-50">
-      < div className = "modal-content " >
+        <div className = " overflow-y-auto top-2 z-20 fixed   w-full h-full left-0 flex items-center  justify-center bg-gray-900 bg-opacity-50">
+      < div className =" " >
         <UserProfile />
         <div className="flex justify-center ">
           <button
@@ -53,8 +76,9 @@ const Navbar = ({ cartLength }) => {
    
   <div className="container mx-auto flex justify-between items-center">
 
-    <div className="text-white text-2xl font-bold">
-      MyApp
+    <div className="text-white text-4xl flex items-center gap-5 font-bold">
+      <img className='h-[55px] ' src={logo} alt=""  />
+      Food Haven
     </div>
 
     <ul className=" hidden md:flex space-x-6 items-center ">
@@ -94,7 +118,8 @@ const Navbar = ({ cartLength }) => {
 
         </li></SignedOut>
       <SignedIn>
-        <li onClick={() => setshowsetting((prev) => !prev)}   className='cursor-pointer'>
+        <li
+          onClick={toggleSettings}   className='cursor-pointer'>
           <lord-icon
             src="https://cdn.lordicon.com/ifsxxxte.json"
             trigger="loop"
@@ -165,7 +190,9 @@ const Navbar = ({ cartLength }) => {
     
     } 
    {showsetting && (
-  <div className="top-0 fixed md:absolute w-full h-full md:h-auto  md:top-20 md:right-4 z-50 bg-white md:w-[400px] max-h-[700px] text-gray-800 rounded-lg shadow-lg border border-gray-300">
+  <div
+   ref={modalRef}
+   className="top-0 fixed md:absolute w-full h-full md:h-auto  md:top-20 md:right-4 z-50 bg-white md:w-[400px] max-h-[700px] text-gray-800 rounded-lg shadow-lg border border-gray-300">
     <span className='md:hidden block absolute top-0 right-0  cursor-pointer' onClick={() => setshowsetting(false)}>
     <lord-icon
     src="https://cdn.lordicon.com/xracfmrw.json"
