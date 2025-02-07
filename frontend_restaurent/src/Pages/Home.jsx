@@ -96,6 +96,9 @@ const Home = () => {
   const gotomenu = () => {
     navigate('/menu');
   }
+  const gotoreserve = () => {
+    navigate('/reserve');
+  }
 
   const showblockedlocation =async()=>{
     setshownolocation(true);
@@ -231,8 +234,8 @@ const Home = () => {
             <button onClick={gotomenu} className="bg-white text-blue-600 font-semibold py-2 px-6 rounded shadow-lg hover:bg-gray-100 transition">
               View Menu
             </button>
-            <button className="ml-4 bg-orange-700 text-white font-semibold py-2 px-6 rounded shadow-lg hover:bg-indigo-800 transition">
-              Order Now
+            <button onClick={gotoreserve}  className="ml-4 bg-orange-700 text-white font-semibold py-2 px-6 rounded shadow-lg hover:bg-orange-800 transition">
+              Reserve a Table
             </button>
           </div>
         </div>
@@ -259,7 +262,7 @@ const Home = () => {
                 taste buds.
               </p>
               <button onClick={gotomenu} className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
-                Order Now
+              Order Now
               </button>
             </div>
           </div>
@@ -314,7 +317,7 @@ const Home = () => {
           </p>
 
           <div className='flex flex-wrap justify-center gap-4'>
-            <button className='bg-white text-orange-600 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 hover:scale-105 transition-transform'>
+            <button onClick={gotoreserve}  className='bg-white text-orange-600 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 hover:scale-105 transition-transform'>
               Reserve Now
             </button>
             <button onClick={gotomenu} className='bg-indigo-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg  hover:scale-105 bounceslow hover:animate-none transition-transform'>
