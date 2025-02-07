@@ -39,7 +39,11 @@ router.post("/address", async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
-        user.userAdress = { street, city, state, zip,addressname };
+
+        if (user.userAdress.some(address => address.addressname === addressname)) {
+            return res.status(400).json({ success: false, message: 'Address name already exists' });
+        }        
+        user.userAdress.push({ street, city, state, zip,addressname });
         await user.save();
         return res.status(200).json({ success: true, message: 'Address updated successfully' });
     } catch (error) {

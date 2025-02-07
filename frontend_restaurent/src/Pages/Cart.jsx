@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import vegicon from '../assets/vegicon.svg';
 import nonvegicon from '../assets/nonvegicon.svg';
 import Confetti from 'react-confetti';
+import Address from '../Constant/Address'
 
 const Cart = () => {
   const { getToken } = useAuth();
@@ -203,9 +204,10 @@ const Cart = () => {
       const data = await response.json();
       if (response.ok) {
         toast.success(data.message);
+        setaddress((prev) => [...prev, { street, city, state, zip, addressname }]);
         setisaddress(true);
       } else {
-        toast.error('Error adding address');
+        toast.error(data.message);
       }
     }
     catch (error) {
@@ -222,6 +224,17 @@ const Cart = () => {
             <h3 className="text-3xl font-extrabold text-gray-800 text-center mb-6">
               Add Address
             </h3>
+            {address.length > 0 && (
+ <span className='absolute top-3 right-4 cursor-pointer' onClick={() => setisaddress(true)}>
+ <lord-icon
+src="https://cdn.lordicon.com/mfoessik.json"
+trigger="hover"
+colors="primary:#913710,secondary:#ee8f66"
+style={{ width: "50px", height: "50px" }}>
+</lord-icon>
+ </span>
+              )}
+           
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -317,7 +330,7 @@ const Cart = () => {
               </div>
               <button
                 type="submit"
-                className="add-address mt-6 w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white text-lg font-semibold py-3 rounded-lg shadow-lg hover:from-blue-500 hover:to-blue-400 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-transform transform hover:scale-105"
+                className="add-address mt-6 w-full bg-gradient-to-r  from-orange-600 to-orange-500 text-white text-lg font-semibold py-3 rounded-lg shadow-lg hover:from-orange-500 hover:to-orange-400 focus:ring-4 focus:ring-orange-300 focus:outline-none transition-transform transform hover:scale-105"
               >
                 Add Address
               </button>
@@ -407,7 +420,15 @@ const Cart = () => {
           </div>
         )}
         <div className="container mx-auto p-6 bg-gradient-to-r from-gray-50 via-gray-100 to-gray-200 rounded-lg shadow-lg w-full my-4">
-          <h2 className="text-4xl font-extrabold mb-6 text-gray-900 border-b-4 border-gray-400 pb-4">Your Cart</h2>
+          <div className=' border-b-4 mb-9 border-gray-400 pb-4 flex justify-between'>  <h2 className="text-4xl font-extrabold  text-gray-900">Your Cart</h2>
+          <span className='flex items-center gap-3 '>
+          <Address adress={address} />
+          <button className='add-address hidden sm:block bg-orange-700 text-white px-6 py-3 rounded-lg shadow hover:bg-orange-800 transition ' onClick={() => setisaddress(false)}>Add Address</button>
+          
+          </span>
+         
+          </div>
+        
           <div className="flex flex-col lg:flex-row gap-10 border-b-4 border-gray-400 pb-7 md:pb-14">
             <div className="cart-items max-h-[60vh] overflow-y-scroll hide-scrollbar flex-1 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
               {cartItems.map((item, index) => (
@@ -485,11 +506,10 @@ const Cart = () => {
                       ).toFixed(2)
                     );
                   }}
-                  disabled={!isaddress || cartItems.length === 0}  className={`checkout-button px-6 py-3 rounded-lg shadow w-full sm:w-auto ${(isaddress && cartItems.length > 0)
+                  disabled={!isaddress || cartItems.length === 0}   className={`checkout-button px-6 py-3 rounded-lg shadow w-full sm:w-auto ${(isaddress && cartItems.length > 0)
                     ? "bg-blue-600 text-white hover:bg-blue-700"
                     : "bg-gray-400 text-gray-700 cursor-not-allowed"
-                    }`}
-                >
+                    }`}>
                   Checkout
                 </button>
               </div>

@@ -129,7 +129,6 @@ const Fullmenu = () => {
   return (
     <div className="relative bg-gray-100 min-h-screen">
 
-    {/* Loading State */}
     {loading && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div className="flex flex-col items-center gap-4">

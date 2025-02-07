@@ -71,7 +71,7 @@ const Navbar = ({ cartLength }) => {
         </div>
       </div >
     </div > ) :
-(<nav className="bg-gradient-to-r from-orange-500 to-orange-600 px-4 py-2 sticky top-0 z-50">
+(<nav className="bg-gradient-to-r from-orange-500 to-orange-600 px-4 py-2 sticky w-full top-0 z-50">
 
    
   <div className="container mx-auto flex justify-between items-center">
@@ -83,7 +83,7 @@ const Navbar = ({ cartLength }) => {
 
     <ul className=" hidden md:flex space-x-6 items-center ">
       <li className="text-white text-2xl font-bold hover:underline hover:text-gray-300 cursor-pointer" onClick={navigatetoHome}>Home</li>
-      < li onClick={gotomenu} className="text-white text-2xl font-bold hover:underline hover:text-gray-300 cursor-pointer">Menu</li>
+      {/* < li onClick={gotomenu} className="text-white text-2xl font-bold hover:underline hover:text-gray-300 cursor-pointer">Menu</li> */}
       <li className='cursor-pointer' onClick={navigatetoCart}><div style={{ position: 'relative', display: 'inline-block', width: '45px', height: '45px' }}>
         <lord-icon
           src="https://cdn.lordicon.com/pbrgppbb.json"
@@ -192,7 +192,7 @@ const Navbar = ({ cartLength }) => {
    {showsetting && (
   <div
    ref={modalRef}
-   className="top-0 fixed md:absolute w-full h-full md:h-auto  md:top-20 md:right-4 z-50 bg-white md:w-[400px] max-h-[700px] text-gray-800 rounded-lg shadow-lg border border-gray-300">
+   className="top-0 fixed  w-full h-full md:h-auto  md:top-20 md:right-4 z-50 bg-white md:w-[400px] max-h-[700px] text-gray-800 rounded-lg shadow-lg border border-gray-300">
     <span className='md:hidden block absolute top-0 right-0  cursor-pointer' onClick={() => setshowsetting(false)}>
     <lord-icon
     src="https://cdn.lordicon.com/xracfmrw.json"
