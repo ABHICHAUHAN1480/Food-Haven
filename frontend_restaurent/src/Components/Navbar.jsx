@@ -84,7 +84,7 @@ const Navbar = ({ cartLength }) => {
     <ul className=" hidden md:flex space-x-6 items-center ">
       <li className="text-white text-2xl font-bold hover:underline hover:text-gray-300 cursor-pointer" onClick={navigatetoHome}>Home</li>
       {/* < li onClick={gotomenu} className="text-white text-2xl font-bold hover:underline hover:text-gray-300 cursor-pointer">Menu</li> */}
-      <li className='cursor-pointer' onClick={navigatetoCart}><div style={{ position: 'relative', display: 'inline-block', width: '45px', height: '45px' }}>
+      {cartLength!=-2 && <li className='cursor-pointer' onClick={navigatetoCart}><div style={{ position: 'relative', display: 'inline-block', width: '45px', height: '45px' }}>
         <lord-icon
           src="https://cdn.lordicon.com/pbrgppbb.json"
           trigger="hover"
@@ -106,7 +106,7 @@ const Navbar = ({ cartLength }) => {
           {cartLength}
         </span>
       </div>
-      </li>
+      </li>}
       <SignedOut>
         <li>
 
@@ -175,7 +175,8 @@ const Navbar = ({ cartLength }) => {
           </SignInButton>
 
         </li></SignedOut>
-      <li onClick={navigatetoCart} className="text-white hover:text-gray-300 hover:underline cursor-pointer">CART <SignedIn>({cartLength})</SignedIn></li>
+       {cartLength!=-2 &&
+      <li onClick={navigatetoCart} className="text-white hover:text-gray-300 hover:underline cursor-pointer">CART <SignedIn>({cartLength})</SignedIn></li>}
            
       <SignedIn>
         <li onClick={() => setshowsetting((prev) => !prev)}>Setting</li>

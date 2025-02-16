@@ -37,6 +37,12 @@ const userSchema = mongoose.Schema({
         state: { type: String },
         zip: { type: String },
     }],
+    tablereservation: [
+        {
+            type: mongoose.Schema.Types.ObjectId,  
+            ref: 'Reservations'  
+        }
+    ]
 });
 
 

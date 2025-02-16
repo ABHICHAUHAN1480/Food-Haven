@@ -20,9 +20,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 .hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Hides scrollbar for Chrome, Safari, and Edge */
+  display: none;
 }
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 
 .cl-avatarBox{
 width: 56px;
